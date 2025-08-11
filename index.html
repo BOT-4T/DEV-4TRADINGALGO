@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bots de Trading sur Mesure — @cephee05</title>
+  <meta name="description" content="Développement de bots de trading custom. Backtests WFA & Monte Carlo, suivi Telegram, déploiement VPS. Exchanges ccxt + Hyperliquid." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <meta property="og:title" content="Bots de Trading sur Mesure — @cephee05" />
+  <meta property="og:description" content="Des bots construits pour ton use-case. Exchanges ccxt + Hyperliquid. Backtests sérieux, suivi Telegram, installation rapide." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 60'%3E%3Crect width='120' height='60' fill='%230ea5e9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='12' fill='white'%3EBots custom — @cephee05%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230ea5e9'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='Arial' font-size='56' fill='white'%3E⚙%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f1a; --card:#0f1626; --muted:#8892a6; --txt:#e6eaf2; --accent:#0ea5e9; --ok:#22c55e; --warn:#f59e0b; --err:#ef4444;
+      --ring: 0 0 0 8px rgba(14,165,233,.15);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--txt)}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin:0 auto; padding:0 20px}
+    .btn{display:inline-flex; gap:.6rem; align-items:center; padding:14px 18px; border-radius:14px; background:var(--accent); color:#001221; font-weight:700; box-shadow:0 8px 24px rgba(14,165,233,.3); transition:.2s}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{background:transparent; color:var(--txt); border:1px solid #1e293b}
+    .badge{display:inline-flex; align-items:center; gap:.4rem; padding:6px 10px; border-radius:999px; font-size:.8rem; background:#0b2533; color:#9bdcff; border:1px solid #113549}
+    header.hero{padding:64px 0 24px; border-bottom:1px solid #111827; background:radial-gradient(1200px 480px at 40% -10%, rgba(14,165,233,.15), transparent)}
+    .hero h1{font-size:clamp(28px,4.6vw,54px); line-height:1.05; margin:14px 0 12px; letter-spacing:-.02em}
+    .lead{font-size:clamp(16px,1.5vw,18px); color:var(--muted)}
+    .grid{display:grid; gap:20px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:900px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
+    .card{background:var(--card); border:1px solid #152036; border-radius:18px; padding:20px; box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+    .card h3{margin:.2rem 0 .6rem}
+    .price{font-size:32px; font-weight:800}
+    .price small{color:var(--muted); font-weight:600; font-size:14px}
+    ul.list{padding-left:0; margin:12px 0 0; list-style:none}
+    ul.list li{display:flex; gap:.6rem; align-items:flex-start; padding:8px 0; color:#c7d2fe}
+    ul.list li svg{flex:0 0 auto; margin-top:2px}
+    section{padding:54px 0}
+    .section-title{font-size:26px; margin:0 0 18px}
+    .muted{color:var(--muted)}
+    .table{width:100%; border-collapse:collapse; font-size:14px}
+    .table th,.table td{padding:10px 12px; border-bottom:1px dashed #20314f}
+    .kpi{display:flex; align-items:center; gap:10px; padding:10px 14px; background:#0c1a29; border:1px solid #13243b; border-radius:12px; color:#bfe3ff}
+    .footer{padding:36px 0 52px; color:#95a3b8; font-size:13px}
+    .cta-stack{display:flex; gap:12px; flex-wrap:wrap}
+    .chip{display:inline-flex; align-items:center; gap:.35rem; padding:4px 8px; border-radius:999px; background:#0c1a29; color:#bfe3ff; border:1px solid #15324c; font-size:12px}
+    .process-step{display:flex; gap:14px; align-items:flex-start}
+    .process-step .num{flex:0 0 36px; height:36px; border-radius:10px; background:#0b2533; color:#9bdcff; display:grid; place-items:center; font-weight:800; border:1px solid #123a52}
+    .faq dt{font-weight:700; margin:14px 0 6px}
+    .faq dd{margin:0 0 12px; color:#bfd7ee}
+    .legal{font-size:12px; color:#9fb1c8}
+    .highlight{background:linear-gradient(90deg, rgba(14,165,233,.18), transparent); padding:.2rem .4rem; border-radius:8px}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <span class="badge">🚀 Bots custom • Exchanges ccxt + Hyperliquid</span>
+      <h1>Des <span class="highlight">bots de trading</span> construits pour <span class="highlight">ton use‑case</span>.</h1>
+      <p class="lead">Backtests <strong>walk‑forward + Monte Carlo</strong>, suivi Telegram en temps réel, installation sur VPS et journalisation CSV. Aucun blabla de performance non contractuelle — juste du process solide.</p>
+      <div class="cta-stack" style="margin-top:18px">
+        <a class="btn" href="https://t.me/cephee05" target="_blank" rel="noopener">💬 DM Telegram — @cephee05</a>
+        <a class="btn secondary" href="#packs">Voir les packs</a>
+      </div>
+      <div class="grid cols-3" style="margin-top:22px">
+        <div class="kpi">⚙️ <b>Sur‑mesure</b> • stratégies momentum, mean‑reversion, copy whales, cash‑&‑carry…</div>
+        <div class="kpi">📊 <b>Robustesse</b> • WFA, Monte Carlo, kill‑switch DD, heartbeats</div>
+        <div class="kpi">🌐 <b>Exchanges</b> • ccxt (Binance, Bybit, Bitget, OKX, Kraken, KuCoin…) + Hyperliquid</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="preuves">
+      <div class="container">
+        <h2 class="section-title">Preuves & garanties techniques</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Backtests sérieux</h3>
+            <p class="muted">Walk‑forward (évite l’overfit), Monte Carlo (stress test), split temporel propre.</p>
+            <ul class="list">
+              <li>✅ Rapports WFA + MC fournis</li>
+              <li>✅ Métriques: Sharpe, MaxDD, Profit Factor, Expectancy</li>
+              <li>✅ Courbes equity & distribution PnL</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Suivi & logs</h3>
+            <p class="muted">Alertes Telegram: démarrage, signaux, exécutions, erreurs, heartbeats. CSV: signals, fills, PnL journalier.</p>
+            <ul class="list">
+              <li>✅ Journalisation <code>signals.csv</code>, <code>executions.csv</code></li>
+              <li>✅ <abbr title="drawdown">DD</abbr> hard‑cap + kill‑switch</li>
+              <li>✅ Mode paper / dry‑run</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Déploiement rapide</h3>
+            <p class="muted">VPS, Docker en option, surveillance basique et relances. Zéro friction.</p>
+            <ul class="list">
+              <li>✅ Setup API exchange/DEX</li>
+              <li>✅ Timezone/latence vérifiées</li>
+              <li>✅ Handover + mini‑doc</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="packs">
+      <div class="container">
+        <h2 class="section-title">Packs & tarifs</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <div class="badge">Starter</div>
+            <h3>Lite</h3>
+            <div class="price">199 € <small>à partir de</small></div>
+            <ul class="list">
+              <li>✔️ Adaptation d’un template</li>
+              <li>✔️ Setup VPS + Telegram</li>
+              <li>✔️ 7 jours de support</li>
+            </ul>
+            <div style="margin-top:14px" class="cta-stack">
+              <a class="btn" href="https://t.me/cephee05" target="_blank" rel="noopener">Parler de mon bot</a>
+            </div>
+          </div>
+
+          <div class="card" style="outline:2px solid rgba(14,165,233,.35)">
+            <div class="badge">Le plus populaire</div>
+            <h3>Pro</h3>
+            <div class="price">599 € <small>à partir de</small></div>
+            <ul class="list">
+              <li>✔️ Spécification courte + stratégie custom</li>
+              <li>✔️ Backtests WFA + Monte Carlo</li>
+              <li>✔️ Suivi Telegram + logs CSV</li>
+              <li>✔️ 14 jours de support</li>
+            </ul>
+            <div style="margin-top:14px" class="cta-stack">
+              <a class="btn" href="https://t.me/cephee05" target="_blank" rel="noopener">Réserver ce pack</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="badge">Sur‑mesure complet</div>
+            <h3>Full</h3>
+            <div class="price">999 € <small>à partir de</small></div>
+            <ul class="list">
+              <li>✔️ Dev complet (API ccxt/DEX + Hyperliquid)</li>
+              <li>✔️ Logs avancés + monitoring</li>
+              <li>✔️ Installation, handover & mini‑doc</li>
+              <li>✔️ 30 jours de support</li>
+            </ul>
+            <div style="margin-top:14px" class="cta-stack">
+              <a class="btn" href="https://t.me/cephee05" target="_blank" rel="noopener">Démarrer maintenant</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px">
+          <div class="grid cols-2">
+            <div>
+              <h3>Atelier de cadrage — 79 €</h3>
+              <p class="muted">30–45 min pour verrouiller le scope, le risque, les datas et le plan de livraison. <strong>Déduit</strong> du prix final si on bosse ensemble.</p>
+            </div>
+            <div class="cta-stack" style="justify-content:flex-end; align-items:center">
+              <a class="btn" href="https://t.me/cephee05" target="_blank" rel="noopener">👋 Réserver l’atelier</a>
+              <span class="chip">Déductible</span>
+              <span class="chip">Livraison rapide</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <h2 class="section-title">Comment ça marche</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <div class="process-step"><div class="num">1</div><div><b>Call</b><br><span class="muted">15 min pour cerner l’objectif, marchés, contraintes.</span></div></div>
+            <div class="process-step"><div class="num">2</div><div><b>Spécs</b><br><span class="muted">Hypothèses, datas, gestion du risque, métriques de succès.</span></div></div>
+            <div class="process-step"><div class="num">3</div><div><b>Dev & tests</b><br><span class="muted">Itérations courtes, backtests WFA/MC, mode paper.</span></div></div>
+            <div class="process-step"><div class="num">4</div><div><b>Livraison</b><br><span class="muted">Déploiement VPS, handover, mini‑doc, support.</span></div></div>
+          </div>
+          <div class="card">
+            <h3>Exchanges supportés</h3>
+            <table class="table">
+              <thead>
+                <tr><th>Famille</th><th>Exemples</th><th>Remarques</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ccxt</td><td>Binance, Bybit, Bitget, OKX, Kraken, KuCoin, Coinbase…</td><td>Au choix spot / perp (selon API).</td></tr>
+                <tr><td>DEX</td><td>Uniswap/Router, 1inch (selon besoin)</td><td>Fonction des chaînes & RPC.</td></tr>
+                <tr><td>Hors‑ccxt</td><td>Hyperliquid</td><td>Intégration dédiée.</td></tr>
+              </tbody>
+            </table>
+            <p class="muted" style="margin-top:10px">Liste non exhaustive — on ajuste à ton stack.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2 class="section-title">FAQ</h2>
+        <dl class="faq">
+          <dt>Est‑ce que vous garantissez une performance ?</dt>
+          <dd>Non. On se concentre sur un process robuste (WFA/MC, gestion du risque, tests). Les marchés restent risqués.</dd>
+          <dt>Quels langages & libs utilisez‑vous ?</dt>
+          <dd>Python (ccxt, pandas, numpy, websockets…), plus SDK/REST/WS exchange. Intégration Hyperliquid dédiée.</dd>
+          <dt>Comment se passent les paiements ?</dt>
+          <dd>Accompagnement sur devis. Atelier de cadrage payé d’avance (déduit). Facture <em>auto‑entrepreneur</em>. Crypto possible sur demande.</dd>
+          <dt>Délais de livraison ?</dt>
+          <dd>Varie selon le scope : généralement <strong>5–10 jours</strong> pour le pack Pro.</dd>
+          <dt>Pouvez‑vous gérer l’hébergement ?</dt>
+          <dd>Oui : VPS, Docker optionnel, scripts de relance, monitoring basique.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="legal" class="legal">
+      <div class="container card">
+        <p><strong>Disclaimer :</strong> Pas de conseil en investissement. Les performances passées ne préjugent pas des performances futures. Le trading comporte des risques de perte partielle ou totale du capital.</p>
+        <p><strong>Contrat & CGV :</strong> prestation de services logicielle. Propriété intellectuelle cédée pour l’usage convenu. Pour les contenus numériques fournis avec exécution immédiate, le client peut être amené à <strong>renoncer au droit de rétractation</strong> conformément au droit de la consommation applicable.</p>
+        <p>Contact : <a href="https://t.me/cephee05" target="_blank" rel="noopener">@cephee05 sur Telegram</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div>© <span id="y"></span> — Bots custom par <strong>@cephee05</strong></div>
+        <div class="cta-stack"><a class="btn secondary" href="https://t.me/cephee05" target="_blank" rel="noopener">💬 DM Telegram</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
